@@ -1,0 +1,48 @@
+@import "../../index.scss";
+
+.side-nav {
+	min-height: 100vh;
+	//min-width: 15vw;
+	background-color: $dark-color;
+	border-right: 1px solid $secondary-color;
+	
+
+	.page-links {
+		display: flex;
+		flex-direction: column;
+		position: fixed;
+		margin-top: 20px;
+		margin-left: 10px;
+		font-size: 1.1vw;
+
+		a {
+			padding: 10px 15px;
+			color: $primary-color;
+			border-radius: 20px;
+			text-decoration: none;
+
+			&:hover {
+				background-color: $secondary-color;
+				color: $light-color;
+
+				.icon {
+					color: $light-color;
+				}
+			}
+		}
+
+		.icon {
+			font-size: 1.1vw;
+		}
+	}
+}
+
+@media screen and (max-width: 1024px) {
+	.side-nav {
+		.page-links {
+			label {
+				display: none;
+			}
+		}
+	}
+}

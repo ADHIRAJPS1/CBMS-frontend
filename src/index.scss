@@ -1,0 +1,27 @@
+$color-bg: #fefcfc;
+$dark-color: #366925;
+$primary-color: #faf5f8;
+$secondary-color: #a8c76a;
+$light-color: #0e0d0d;
+$font-secondary-colour: #4f740f;
+$success: #28a745;
+$failure: #dc3545;
+
+body {
+	font-family: "Nunito Sans", sans-serif;
+	background-color: $color-bg;
+	margin: 0;
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+// section {
+// 	position: absolute;
+// 	max-width: max-content;
+// 	margin-top: 77px;
+// 	margin-left: 228px;
+// }

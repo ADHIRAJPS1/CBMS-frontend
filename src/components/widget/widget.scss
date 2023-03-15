@@ -1,0 +1,23 @@
+@import "../../index.scss";
+
+.box {
+	padding: 10px;
+
+	.card {
+		box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
+		background-color: $primary-color;
+		border-radius: 10px;
+		text-align: center;
+
+		.title {
+			font-weight: bold;
+			font-size: 14px;
+
+			color: $dark-color;
+		}
+		.content {
+			font-size: 28px;
+			font-weight: 300;
+		}
+	}
+}
