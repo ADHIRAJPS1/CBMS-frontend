@@ -29,7 +29,8 @@ jobs:
       - name: Upload artifact in order to deploy
         uses: actions/upload-artifact@v2
         with:
-          name: package
+          name: artifact
+          path: /
 #           path: ./artifact
   # Deploy Job
   # deploy:
