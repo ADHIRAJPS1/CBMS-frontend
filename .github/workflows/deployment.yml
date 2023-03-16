@@ -10,10 +10,32 @@ on:
 
 jobs:
   build:
+    name: Build
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [16.x]
+   
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+      - name: Install node 16
+        uses: actions/setup-node@v1
+        with:
+          node-version: 16.x
+      - name: Install NPM Dependencies
+        run: npm i
+      - name: Build Project
+        run: npm run build
+        env:
+         CI: false
+      # - name: Upload artifact in order to deploy
+      #   uses: actions/upload-artifact@v2
+      #   with:
+      #     name: artifact
+      #     path: ./dist/
+  # Deploy Job
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    needs: build
 
     steps:
       - uses: actions/checkout@v2
@@ -21,23 +43,8 @@ jobs:
         uses: burnett01/rsync-deployments@5.1
         with:
           switches: -avzr --delete
-          path: ./*
+          path: ./build/
           remote_path: /mnt/data/home/master/applications/nnymekrpaf/tmp/
           remote_host: ${{ secrets.HOST }}
           remote_user: ${{ secrets.USERNAME }}
           remote_key: "${{ secrets.KEY }}"
-
-      - name: executing commands on remote using ssh.
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.KEY }}
-          # password: ${{ secrets.PASSWORD }}
-          script: |
-              cd /mnt/data/home/master/applications/nnymekrpaf/tmp/
-              # pm2 stop campagin-idfcfirst
-              npm i
-              npm run build
-              # pm2 restart campagin-idfcfirst
-              # pm2 list
