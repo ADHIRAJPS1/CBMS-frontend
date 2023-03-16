@@ -29,8 +29,8 @@ jobs:
       - name: Upload artifact in order to deploy
         uses: actions/upload-artifact@v2
         with:
-          name: production-files
-          path: ./artifact
+          name: package
+#           path: ./artifact
   # Deploy Job
   # deploy:
   #   name: Deploy
