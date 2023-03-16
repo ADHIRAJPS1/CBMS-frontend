@@ -26,7 +26,12 @@ jobs:
         run: npm run build
         env:
          CI: false
-      - name: Upload artifact in order to deploy
-        uses: actions/upload-artifact@v2
+      - name: rsync deployments
+        uses: burnett01/rsync-deployments@5.1
         with:
-          path: ./
+          switches: -avzr --delete
+          local_path: build/*
+          remote_path: /home/master/test2/
+          remote_host: ${{ secrets.HOST }}
+          remote_user: ${{ secrets.USERNAME }}
+          remote_key: "${{ secrets.KEY }}"
