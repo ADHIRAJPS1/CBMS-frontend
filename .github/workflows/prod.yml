@@ -6,8 +6,8 @@ name: Node CI/CD
 on:
   push:
     branches: [ "prod" ]
-  pull:
-    branches: [ "prod" ]
+ # pull:
+ #   branches: [ "prod" ]
 
 jobs:
   build:
