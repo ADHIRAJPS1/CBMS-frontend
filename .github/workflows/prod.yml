@@ -32,7 +32,7 @@ jobs:
         with:
           switches: -avzr --delete
           path: build/*
-          remote_path: /home/master/applications/nnymekrpaf/tmp/
+          remote_path: /home/master/applications/nnymekrpaf/public_html/
           remote_host: ${{ secrets.HOSTPROD }}
           remote_user: ${{ secrets.USERNAMEPROD }}
           remote_key: "${{ secrets.KEYPROD }}"
