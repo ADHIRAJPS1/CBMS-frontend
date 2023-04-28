@@ -24,7 +24,7 @@ jobs:
       - name: Install NPM Dependencies
         run: npm i
       - name: Build Project
-        run: npm run build
+        run: npm run build:prod
         env:
          CI: false
       - name: rsync deployments
