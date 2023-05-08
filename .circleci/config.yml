@@ -1,0 +1,47 @@
+#v1
+# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
+
+name: Node CI/CD 
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+   
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+      - name: Install node 16
+        uses: actions/setup-node@v1
+        with:
+          node-version: 16.x
+      - name: Install NPM Dependencies
+        run: npm i
+      - name: Build Project
+        run: npm run build:dev
+        env:
+         CI: false
+      - name: rsync deployments on cloudways development server
+        uses: burnett01/rsync-deployments@5.1
+        with:
+          switches: -avzr --delete
+          path: build/*
+          remote_path: /home/master/applications/nnymekrpaf/public_html/
+          remote_host: ${{ secrets.HOST }}
+          remote_user: ${{ secrets.USERNAME }}
+          remote_key: "${{ secrets.KEY }}"
+          
+      - name: rsync deployments on development on AWS server.
+        uses: burnett01/rsync-deployments@5.1
+        with:
+          switches: -avzr --delete
+          path: build/*
+          remote_path: /var/www/cbms_frontend/
+          remote_host: ${{ secrets.HOSTDEV }}
+          remote_user: ${{ secrets.USERNAMEDEV }}
+          remote_key: "${{ secrets.KEYDEV }}"
