@@ -7,7 +7,7 @@ jobs:
     steps:
       - checkout
 
-  deploy:
+  deploy-dev:
     machine:
       enabled: true
     steps:
@@ -43,7 +43,7 @@ workflows:
   build-and-deploy:
     jobs:
       - build
-      - deploy:
+      - deploy-dev:
           requires:
             - build
           filters:
