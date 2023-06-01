@@ -36,12 +36,12 @@ jobs:
           remote_user: ${{ secrets.USERNAME }}
           remote_key: "${{ secrets.KEY }}"
           
-      - name: rsync deployments on development on AWS server.
-        uses: burnett01/rsync-deployments@5.1
-        with:
-          switches: -avzr --delete
-          path: build/*
-          remote_path: /var/www/cbms_frontend/
-          remote_host: ${{ secrets.HOSTDEV }}
-          remote_user: ${{ secrets.USERNAMEDEV }}
-          remote_key: "${{ secrets.KEYDEV }}"
+#       - name: rsync deployments on development on AWS server.
+#         uses: burnett01/rsync-deployments@5.1
+#         with:
+#           switches: -avzr --delete
+#           path: build/*
+#           remote_path: /var/www/cbms_frontend/
+#           remote_host: ${{ secrets.HOSTDEV }}
+#           remote_user: ${{ secrets.USERNAMEDEV }}
+#           remote_key: "${{ secrets.KEYDEV }}"
