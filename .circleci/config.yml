@@ -4,6 +4,20 @@ jobs:
   build:
     docker:
       - image: circleci/node:16
+    steps:
+      - checkout
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+      - run:
+          name: Set CI=false
+          command: echo "export CI=false" >> $BASH_ENV
+      - run:
+          name: Install dependencies
+          command: npm i
+      - save_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+          paths:
+            - node_modules
     
 
   deploy:
