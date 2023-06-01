@@ -51,11 +51,7 @@ workflows:
   version: 2
   build-and-deploy:
     jobs:
-      - build:
-#           filters:
-#             branches:
-#               only:
-#                 - main
+      - build
       - deploy:
           requires:
             - build
