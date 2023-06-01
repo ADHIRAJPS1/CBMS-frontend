@@ -18,6 +18,11 @@ jobs:
           key: dependency-cache-{{ checksum "package.json" }}
           paths:
             - node_modules
+      - run:
+          name: Build application
+          command: npm run build:dev
+      - store_artifacts:
+          path: build
     
 
   deploy:
