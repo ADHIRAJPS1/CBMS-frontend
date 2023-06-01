@@ -23,30 +23,6 @@ jobs:
           command: npm run build:dev
       - store_artifacts:
           path: build
-    
-
-  deploy:
-    machine:
-      enabled: true
-    steps:
-      - checkout
-      - restore_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
-      - run:
-          name: Set CI=false
-          command: echo "export CI=false" >> $BASH_ENV
-      - run:
-          name: Install dependencies
-          command: npm i
-      - save_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
-          paths:
-            - node_modules
-      - run:
-          name: Build application
-          command: npm run build:dev
-      - store_artifacts:
-          path: build
 #       - run:
 #           command: "pwd && cd /home/circleci/project/build/ && ls && ls /home/circleci/project/build/"
       - run:
@@ -58,6 +34,19 @@ jobs:
           command: |
             rsync -azP -e "ssh -o StrictHostKeyChecking=accept-new -i ~/.ssh/id_rsa" /home/circleci/project/build/* $AWS_USER_NAME@$AWS_HOST:/var/www/cbms_frontend/
 
+  deploy:
+    machine:
+      enabled: true
+    steps:
+      - checkout
+#       - run:
+#           name: Install rsync
+#           command: |
+#             sudo apt-get update && sudo apt-get install -y rsync
+#       - run:
+#           name: Deploy to server
+#           command: |
+#             rsync -azP -e "ssh -o StrictHostKeyChecking=accept-new -i ~/.ssh/id_rsa" /home/circleci/project/build/* $AWS_USER_NAME@$AWS_HOST:/var/www/cbms_frontend/
 workflows:
   version: 2
   build-and-deploy:
