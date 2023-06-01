@@ -52,10 +52,14 @@ workflows:
   build-and-deploy:
     jobs:
       - build:
-      - deploy:
-          requires:
-            - build
           filters:
             branches:
               only:
                 - main
+      - deploy:
+#           requires:
+#             - build
+          filters:
+            branches:
+              only:
+                - prod
