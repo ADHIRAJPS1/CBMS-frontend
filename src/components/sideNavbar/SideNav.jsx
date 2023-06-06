@@ -44,6 +44,11 @@ const SideDrawer = () => {
 			icon: <ConfirmationNumberIcon />,
 			linkText: "Promocode",
 		},
+		{
+			path: "/banners",
+			icon: <ConfirmationNumberIcon />,
+			linkText: "Banners",
+		},
 	];
 	return (
 		<Drawer
