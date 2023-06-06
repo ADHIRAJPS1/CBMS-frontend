@@ -65,6 +65,7 @@ const AssignCampaign = (props) => {
 		campaign_url: ""
 	});
 
+	
 	useEffect(() => {
 		dispatch(getAllClients());
 	}, []);
