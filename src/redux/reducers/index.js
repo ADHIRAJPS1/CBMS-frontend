@@ -5,6 +5,7 @@ import campaignReducer from "./campaign.reducer";
 import promoReducer from "./promocode.reducer";
 import alertReducer from "./alert.reducer";
 import userReducer from "./user.reducer";
+import campaignBannerReducer from "./campaignmanager.reducer";
 
 export default combineReducers({
 	authReducer,
@@ -13,4 +14,5 @@ export default combineReducers({
 	clientReducer,
 	campaignReducer,
 	promoReducer,
+	campaignBannerReducer
 });
