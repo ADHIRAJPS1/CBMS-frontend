@@ -18,6 +18,7 @@ import setAuthToken from "./services/setAuthToken";
 import Promocode from "./pages/promocode/Promocode";
 import ClientCampaigns from "./pages/campaigns/ClientCampaigns";
 import Users from "./pages/users/Users";
+import Banners from "./pages/banners/Banners";
 
 const theme = createTheme({
 	palette: {
@@ -91,6 +92,14 @@ const App = () => {
 								element={
 									<PrivateRoute>
 										<ClientCampaigns />
+									</PrivateRoute>
+								}
+							/>
+							<Route
+								path='banners'
+								element={
+									<PrivateRoute>
+										<Banners />
 									</PrivateRoute>
 								}
 							/>

@@ -34,3 +34,16 @@ export const REMOVE_PROMO_BATCH = "REMOVE_PROMO_BATCH";
 export const ALL_PROMO = "ALL_PROMO";
 export const REMOVE_PROMO = "REMOVE_PROMO";
 export const ERR_PROMO = "ERR_PROMO";
+
+
+// fetch all banners of a campaign , delete one banner of a campaign 
+// edit one banner of a campaign , add new banner in a campaign  
+export const CAMPAIGN_BANNERS = "CAMPAIGN_BANNERS";
+export const BANNERS_LIST = "BANNERS_LIST";
+export const ERR_CAMPAIGN_BANNERS = "ERR_CAMPAIGN_BANNERS";
+export const ERR_BANNER = "ERR_UPDATE_BANNER";
+export const REMOVE_BANNER = "REMOVE_BANNER";
+export const CREATE_CAMPAIGN_BANNER = "CREATE_CAMPAIGN_BANNER";
+export const UPDATE_CAMPAIGN_BANNER = "UPDATE_CAMPAIGN_BANNER";
+
+

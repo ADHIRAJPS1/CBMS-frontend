@@ -6,6 +6,7 @@ const Table = (props) => {
 	const { columns, rows } = props;
 
 	return (
+		
 		// <Box sx={{ height: 500, width: "100%" }}>
 		<Box style={{ height: "60vh", width: "98%" }}>
 			<DataGrid
