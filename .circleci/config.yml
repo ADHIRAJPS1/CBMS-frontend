@@ -26,7 +26,7 @@ jobs:
             - node_modules
       - run:
           name: Build application
-          command: npm run build:dev
+          command: npm run build:dev-aws
       - store_artifacts:
           path: build
       - run:
@@ -42,11 +42,16 @@ workflows:
   version: 2
   build-and-deploy:
     jobs:
-      - build
+      - build:
+          filters:
+            branches:
+              only:
+                - dev-aws
+                - prod
       - deploy-dev:
           requires:
             - build
           filters:
             branches:
               only:
-                - main
+                - dev-aws
