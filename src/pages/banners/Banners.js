@@ -5,10 +5,17 @@ import Table from "../../components/table/Table";
 import "../banners/banners.scss";
 import BannerCard from "../../components/cards/BannerCard";
 import { useState } from "react";
+import Typography from '@mui/material/Typography';
+import Modal from '@mui/material/Modal';
+import TextField from '@mui/material/TextField';
+
 
 const Banners = () => {
 	const [openDialog, setOpenDialog] = useState(false);
 	const [editBanner, setEditBanner] = useState({});
+	const [imgd, setImageD] = useState("https://gentecho.com/assets/images/home/uiux.jpg");
+	const [imgm, setImageM] = useState("https://gentecho.com/");
+	const [alt,setAlt] = useState("Enter Alt");
 
 	const handleEdit = (banner_data) => {
 		setOpenDialog(true);
@@ -22,6 +29,24 @@ const Banners = () => {
 	const handleSave = () => {
 		console.log("Saving banner details")
 	}
+
+	const style = {
+		position: 'absolute',
+		top: '50%',
+		left: '50%',
+		transform: 'translate(-50%, -50%)',
+		width: 400,
+		bgcolor: 'background.paper',
+		border: '2px solid #000',
+		boxShadow: 24,
+		p: 4,
+	};
+
+
+	const [open, setOpen] = useState(false);
+	const handleOpen2 = () => setOpen(true);
+	const handleClose2 = () => setOpen(false);
+
 
 	const rows = [
 		{
@@ -95,6 +120,33 @@ const Banners = () => {
 
 	return (<>
 		<Container >
+			<Button variant="contained" contained onClick={handleOpen2}>ADD NEW BANNER</Button>
+			<Modal
+				open={open}
+				onClose={handleClose2}
+				aria-labelledby="modal-modal-title"
+				aria-describedby="modal-modal-description"
+			>
+				<Box sx={style} align="center">
+					<Typography id="modal-modal-title" variant="h6" align="center" component="h2">
+						<b>CREATE A NEW BANNER</b>
+					</Typography>
+					<TextField id="outlined-basic" label="Banner Title" variant="outlined" />
+					<input type="file" id="one" onChange={()=>{setImageD()}}/>
+					<Box
+						component="img"
+						sx={{
+							height: 233,
+							width: 350,
+							maxHeight: { xs: 233, md: 167 },
+							maxWidth: { xs: 350, md: 250 },
+						}}
+						alt={alt}
+						src={imgd
+						}
+					/>
+				</Box>
+			</Modal>
 			<Grid container direction='column' spacing={5}>
 				<Grid item>
 					<Table rows={rows} columns={columns} />
@@ -108,16 +160,16 @@ const Banners = () => {
 			>
 				<DialogTitle>{editBanner.title}</DialogTitle>
 				<Box
-						noValidate
-						component="form"
-						sx={{
-							justifyContent: 'center',
-							position: 'absolute',
-							top: '0',
-							right: '20px'
-						}}
-					>
-						<FormControlLabel
+					noValidate
+					component="form"
+					sx={{
+						justifyContent: 'center',
+						position: 'absolute',
+						top: '0',
+						right: '20px'
+					}}
+				>
+					<FormControlLabel
 						control={
 							<Grid
 								container
@@ -129,8 +181,8 @@ const Banners = () => {
 									variant='outlined'
 									startIcon={<PhotoCamera />}
 									component='label'
-									// onChange={handleIconChange}
-									>
+								// onChange={handleIconChange}
+								>
 									Upload Desktop Banner
 									<input
 										hidden
@@ -162,8 +214,8 @@ const Banners = () => {
 									variant='outlined'
 									startIcon={<PhotoCamera />}
 									component='label'
-									// onChange={handleIconChange}
-									>
+								// onChange={handleIconChange}
+								>
 									Upload Mobile Banner
 									<input
 										hidden
@@ -183,7 +235,7 @@ const Banners = () => {
 							</Grid>
 						}
 					/>
-					</Box>
+				</Box>
 				<DialogContent sx={{ padding: 'auto 0px', margin: '0' }}>
 					<DialogContentText>Desktop Banner</DialogContentText>
 					<Box
@@ -195,7 +247,7 @@ const Banners = () => {
 							backgroundColor: '#AEAEAE'
 						}}
 					>
-						<img src={editBanner.img_d} style={{ width: '100%', height: '100%', minHeight:'163px', margin: '0px' }} />
+						<img src={editBanner.img_d} style={{ width: '100%', height: '100%', minHeight: '163px', margin: '0px' }} />
 					</Box>
 					<DialogContentText>Mobile Banner</DialogContentText>
 					<Box
@@ -207,7 +259,7 @@ const Banners = () => {
 							backgroundColor: '#AEAEAE'
 						}}
 					>
-						<img src={editBanner.img_m} style={{ width: '600px', height: '100%', minHeight:'160px', margin: '0px' }} />
+						<img src={editBanner.img_m} style={{ width: '600px', height: '100%', minHeight: '160px', margin: '0px' }} />
 					</Box>
 				</DialogContent>
 				<DialogActions>

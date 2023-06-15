@@ -12,8 +12,12 @@ import Typography from '@mui/material/Typography';
 import CloseIcon from '@mui/icons-material/Close';
 import Slide from '@mui/material/Slide';
 import { Visibility } from '@mui/icons-material';
+import Alert from '@mui/material/Alert';
+// import Stack from '@mui/material/Stack';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
 
-import { Container, Grid } from '@mui/material';
+
+import { Container, Grid , Tooltip } from '@mui/material';
 import Banner from './banner';
 
 
@@ -104,8 +108,10 @@ export default function FullScreenDialog(props) {
           </ListItem>
           <Divider />
           <Grid container justifyContent="left">
-            { campaignbanners.length <=0 && ( 
-              <h1>NO CAMPAIGN FOUND</h1>
+            {campaignbanners.length <= 0 && (
+              <Grid container justifyContent="center">
+                <Alert severity="info" variant="filled">NO CAMPAIGN BANNERS FOUND</Alert>
+              </Grid>
             )}
             {campaignbanners.length > 0 && (
               campaignbanners.map((item) => {
@@ -121,32 +127,48 @@ export default function FullScreenDialog(props) {
 
           <Divider />
 
-          
+
           {/* <h1>QUICK LINKS </h1> */}
           <Grid container>
             <Grid lg={6} md={6} xs={12}>
-              <Typography>
-                  <h1 align="center">QUICKLINKS CENTER</h1>
+              <Typography variant="h5" align="center">
+                
+                  QUICKLINKS CENTER
+                  <Tooltip>
+                      <Button autoFocus onClick={handleClose} position="relative">
+                          <AddCircleIcon color="primary"/>
+                      </Button>
 
+                  </Tooltip>
+
+                
               </Typography>
-                <DataTable />
+              <DataTable />
             </Grid>
 
             <Grid lg={6} md={6} xs={12}>
-              <Typography>
-                <h1 align="center">BRAND PARTNERS</h1>
+            <Typography variant="h5" align="center">
+                
+                PARTNERS
+                <Tooltip>
+                    <Button autoFocus onClick={handleClose} position="relative">
+                        <AddCircleIcon color="primary"/>
+                    </Button>
 
-              </Typography>
-                <DataTable />
+                </Tooltip>
+
+              
+            </Typography>
+              <DataTable />
             </Grid>
 
           </Grid>
 
           {/* <h1>BRAND PARTNERS AUTOMATION</h1> */}
-              
+
         </List>
       </Dialog>
-      
+
     </div>
 
   );

@@ -35,12 +35,9 @@
 		"start": "react-scripts start",
 		"build": "react-scripts build",
 		"build:dev": "env-cmd -f .env.dev react-scripts build",
-<<<<<<< HEAD
 		"build:production": "env-cmd -f .env.production react-scripts build",
-=======
 		"build:dev-aws": "env-cmd -f .env.dev-aws react-scripts build",
-        	"build:production": "env-cmd -f .env.production react-scripts build",
->>>>>>> 0fadafae70b16bec8d68f925656e8821f48af4a0
+        "build:production": "env-cmd -f .env.production react-scripts build",
 		"test": "react-scripts test",
 		"eject": "react-scripts eject"
 	},
