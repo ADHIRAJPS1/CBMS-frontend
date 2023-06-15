@@ -12,19 +12,15 @@ import Typography from '@mui/material/Typography';
 import CloseIcon from '@mui/icons-material/Close';
 import Slide from '@mui/material/Slide';
 import { Visibility } from '@mui/icons-material';
-// import Card from '@mui/material/Card';
-// import CardActions from '@mui/material/CardActions';
-// import CardContent from '@mui/material/CardContent';
-// import CardMedia from '@mui/material/CardMedia';
+
 import { Container, Grid } from '@mui/material';
 import Banner from './banner';
-// import { green } from '@mui/material/colors';
-// import Icon from '@mui/material/Icon';
-// import Box from '@mui/material/Box';
+
+
 import { useEffect } from 'react';
 
 // <DraggableCore>
-import Draggable, { DraggableCore } from 'react-draggable'; // Both at the same time
+// import Draggable, { DraggableCore } from 'react-draggable'; // Both at the same time
 
 import KeepMountedModal from './assignbanner';
 import { useDispatch, useSelector } from 'react-redux';
@@ -33,6 +29,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   getAllBannersOfCampaign
 } from "../../redux/actions/campaignmanager.actions"
+import DataTable from './quicklinks';
+
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -46,11 +44,9 @@ export default function FullScreenDialog(props) {
   const dispatch = useDispatch();
 
   const handleClickOpen = (props) => {
-    
     setOpen(true);
     // console.log(" bid = ",campdata.campaign_id );
     dispatch(getAllBannersOfCampaign(campdata.campaign_id));
-    
     // console.log(" dvl = ", campdata);
     // console.log(" camp banners : ",campaignbanners);
   };
@@ -85,18 +81,12 @@ export default function FullScreenDialog(props) {
             >
               <CloseIcon />
             </IconButton>
-            
-
             <Container fixed>
               <Typography variant="h6" sx={{ flexGrow: 1 }}>
                 name of client - {campdata.client_name} <br />
                 Name of campaign - {campdata.campaign_name}
               </Typography>
             </Container>
-
-
-
-
             <Button autoFocus color="inherit" onClick={handleClose}>
               save
             </Button>
@@ -112,63 +102,50 @@ export default function FullScreenDialog(props) {
               <KeepMountedModal data={campdata.campaign_id} />
             </Button>
           </ListItem>
-
           <Divider />
-
-
           <Grid container justifyContent="left">
-            
+
             {campaignbanners.length > 0 && (
               campaignbanners.map((item) => {
                 return (
-                    <Grid xs={12} md={6}>
-                        <Banner data={item} />
-                      </Grid>
-                  
-                  )  
+                  <Grid xs={12} md={6} lg={4}>
+                    <Banner data={item} />
+                  </Grid>
+
+                )
               })
             )}
           </Grid>
 
+          <Divider />
 
+          
+          {/* <h1>QUICK LINKS </h1> */}
+          <Grid container>
+            <Grid lg={6} md={6} xs={12}>
+              <Typography>
+                  <h1 align="center">QUICKLINKS CENTER</h1>
 
+              </Typography>
+                <DataTable />
+            </Grid>
 
+            <Grid lg={6} md={6} xs={12}>
+              <Typography>
+                <h1 align="center">BRAND PARTNERS</h1>
 
+              </Typography>
+                <DataTable />
+            </Grid>
 
+          </Grid>
+
+          {/* <h1>BRAND PARTNERS AUTOMATION</h1> */}
+              
         </List>
       </Dialog>
-      {/* 
-        <Grid xs={12} md={6}>
-              <Card sx={{  }}>
-                <CardMedia
-                  component="img"
-                  alt="green iguana"
-                  height="300"
-                  sx={{ ml: 1 }}
-                  image="https://phpstack-927127-3276493.cloudwaysapps.com/images/offerings/icons/brand_icon-1683087074832.Frame_38_50.jpg"
-                />
-                <CardContent>
-                  <Typography gutterBottom variant="body" component="div">
-                    LINK - {data.link}
-                  </Typography>
-                  <Typography gutterBottom variant="body" component="div">
-                    ALT - {data.alt}
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    CREATED ON - {data.created_on}
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    UPDATED ON - {data.updated_on}
-                  </Typography>
-                </CardContent>
-                <CardActions>
-                  <Button size="small">Share</Button>
-                  <Button size="small">Learn More</Button>
-                </CardActions>
-              </Card>
-            </Grid> */}
+      
     </div>
-
 
   );
 }

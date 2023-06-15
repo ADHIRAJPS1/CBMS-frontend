@@ -74,6 +74,13 @@ export default function KeepMountedModal(props) {
         console.log(" data received from props = ",props);
         console.log("  banner added = ", data);
         dispatch(saveCampaignBanner(data));
+        // if(campaignbanner){
+        //     alert("BANNER ADDED SUCCESSFULLY");
+        // }
+        // if(errors){
+        //     alert("SOME ERROR OCCURED");
+        // }
+        window.location.reload();
     };
 
     
@@ -96,13 +103,11 @@ export default function KeepMountedModal(props) {
             >
                 <Box sx={style}>
                     <Breadcrumbs aria-label="breadcrumb">
-                        <Link underline="hover" color="inherit" href="/">
+                        <Link underline="hover" color="inherit" href="/client-campaign">
                             Assign Campaign
                         </Link>
                         <Link
-                            underline="hover"
-                            color="inherit"
-                            href="/material-ui/getting-started/installation/"
+                        color="inherit"
                         >
                             New Banner
                         </Link>

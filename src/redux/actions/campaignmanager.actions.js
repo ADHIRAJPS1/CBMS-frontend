@@ -4,7 +4,8 @@ import {
 	CAMPAIGN_BANNERS, 
     ERR_CAMPAIGN_BANNERS , 
     ERR_BANNER,
-    CREATE_CAMPAIGN_BANNER
+    CREATE_CAMPAIGN_BANNER,
+    UPDATE_CAMPAIGN_BANNER
 } from "./actionTypes";
 
 import { setAlert } from "./alert.actions";
@@ -64,8 +65,15 @@ export const saveCampaignBanner = (data) => async(dispatch) => {
 };
 
 
-export const updateBanner = (id) => async (dispatch) => {
+export const updateCamBanner = (id,data) => async (dispatch) => {
     try {
+        const cbid = id;
+        const res = await apicall(`campaign_banner/${cbid}`, "patch" , data );
+        console.log(" update campaign banner = ",res);
+        dispatch({
+            type: UPDATE_CAMPAIGN_BANNER,
+            payload: res.data
+        })
 
     } catch (err) {
         console.log(" error = ", err);

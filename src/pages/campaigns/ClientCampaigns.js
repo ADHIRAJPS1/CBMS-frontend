@@ -11,7 +11,7 @@ import {
 	// Switch,
 } from "@mui/material";
 import WorkIcon from "@mui/icons-material/Work";
-// import DeleteIcon from "@mui/icons-material/Delete";
+import DeleteIcon from "@mui/icons-material/Delete";
 // import EditIcon from "@mui/icons-material/Edit";
 import AddIcon from "@mui/icons-material/Add";
 import Box from "@mui/material/Box";
@@ -102,12 +102,12 @@ const ClientCampaigns = () => {
 			width: 360,
 			editable: false,
 		},
-		{
-			field: "campaign_id",
-			headerName: "Campaign ID",
-			width: 150,
-			editable: false,
-		},
+		// {
+		// 	field: "campaign_id",
+		// 	headerName: "Campaign ID",
+		// 	width: 150,
+		// 	editable: false,
+		// },
 		{
 			field: "actions",
 			headerName: "Actions",
@@ -116,9 +116,19 @@ const ClientCampaigns = () => {
 			renderCell: (params) => (
 				<Box>
 					<Tooltip title=''>
-						<IconButton onClick={(e)=>{handleView(params.row)}}>							
+						<IconButton onClick={(e) => { handleView(params.row) }}>
 							<FullScreenDialog key={params.row.id} data={params.row} />
 						</IconButton>
+
+
+					</Tooltip>
+					<Tooltip title='This feature will help you to delete the campaign. COMING SOON '>
+						<IconButton onClick={(e) => { handleView(params.row) }}>
+							<Button variant="contained" color="secondary">
+								<DeleteIcon />
+							</Button>
+						</IconButton>
+
 					</Tooltip>
 					{/* <Tooltip title='Edit brand'>
 						<IconButton
@@ -137,6 +147,7 @@ const ClientCampaigns = () => {
 						</IconButton>
 					</Tooltip> */}
 				</Box>
+
 			),
 		},
 	];

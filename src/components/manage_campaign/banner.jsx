@@ -24,11 +24,12 @@ import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 
 import { useState, useEffect } from 'react';
+// import { useDispatch } from 'react-redux';
 
-// import { useDispatch , useSelector } from 'react-redux';
-// import {
-//   getAllBannersOfCampaign
-// } from "../../redux/actions/campaignmanager.actions"
+import { useDispatch , useSelector } from 'react-redux';
+import {
+  updateCamBanner
+} from "../../redux/actions/campaignmanager.actions"
 
 
 const Banner = styled((props) => {
@@ -50,9 +51,11 @@ export default function RecipeReviewCard(props) {
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
-  };
 
- 
+  };
+  const data = props.data;
+  const dispatch = useDispatch();
+
 
   const [checked, setChecked] = React.useState(true);
 
@@ -62,15 +65,20 @@ export default function RecipeReviewCard(props) {
 
   const updatebanner = () => {
     console.log(" clicked", checked);
-    // if(checked === true){
-    //   setChecked(false);
-    // }
-    // else {
-    //   setChecked(true);
-    // }
+    const cbid = props.data.id;
+    const data = {
+
+      alt: alt,
+      href: href,
+      sequence_no: sequence_no
+    };
+    console.log("cbid = ", cbid , " data = ",data ); 
+    dispatch(updateCamBanner(cbid , data));
+    window.location.reload();
+
   };
 
-  const data = props.data;
+ 
   // console.log(" banner inside compoennt = " ,data);
   return (
     <Card sx={{ maxWidth: 500 }}>
@@ -121,7 +129,7 @@ export default function RecipeReviewCard(props) {
         <CardContent>
           <Typography align='center' paragraph>
             <b>Banner Info</b>
-            
+
             {/* <Button control={<Switch defaultChecked />} label="Update Banner" onClick={updatebanner()} /> */}
 
           </Typography>
@@ -129,24 +137,44 @@ export default function RecipeReviewCard(props) {
 
 
           <Typography>Alt tag - {data.alt}</Typography>
-          <Typography>Link to - {data.link}</Typography>
-          <Typography>Sequence Number - {data.sequence}</Typography>
+          <Typography>Link to - {data.href}</Typography>
+          <Typography>Sequence Number - {data.sequence_no}</Typography>
           <Typography>Created On - {data.created_at}</Typography>
-          <Typography>Last Updated On - {data.updated_at}</Typography>
-          
+          <Typography>Last Updated On - {data.modified_at}</Typography>
 
-          <TextField id="standard-basic" label="Redirects to link" variant="standard" value={href} onChange={(event) => setHref(event.target.value)} />
+          {/* <form onSubmit={() => {updatebanner()}}>
+            <TextField
+              label="Alt"
+              variant="outlined"
+              value={alt}
+              onChange={(event) => setAlt(event.target.value)}
+            />
+            <TextField
+              label="Href"
+              variant="outlined"
+              value={href}
+              onChange={(event) => setHref(event.target.value)}
+            />
+            <TextField
+              label="Sequence No"
+              variant="outlined"
+              value={sequence_no}
+              onChange={(event) => setSequenceNo(event.target.value)}
+            />
+            <Button variant="contained" color="primary" onClick={updatebanner()}>
+              Submit
+            </Button>
+          </form> */}
+
+          <TextField id="standard-basic" label="Update redirects link" variant="standard" value={href} onChange={(event) => setHref(event.target.value)} />
           <br />
           <TextField id="standard-basic" label="Update ALT tag here" variant="standard" value={alt} onChange={(event) => setAlt(event.target.value)} />
           <br />
           <TextField id="standard-basic" label="Update Sequence no. here" variant="standard" value={sequence_no} onChange={(event) => setSequenceNo(event.target.value)} />
           <br />
-          <Typography>
-            Created On - {data.created_at}
-          </Typography>
           <br />
 
-          <Button variant="contained" onClick={updatebanner()}>Save</Button>
+          <Button variant="contained" onClick={() => {updatebanner()}}>Save</Button>
         </CardContent>
       </Collapse>
     </Card>
