@@ -104,7 +104,9 @@ export default function FullScreenDialog(props) {
           </ListItem>
           <Divider />
           <Grid container justifyContent="left">
-
+            { campaignbanners.length <=0 && ( 
+              <h1>NO CAMPAIGN FOUND</h1>
+            )}
             {campaignbanners.length > 0 && (
               campaignbanners.map((item) => {
                 return (
