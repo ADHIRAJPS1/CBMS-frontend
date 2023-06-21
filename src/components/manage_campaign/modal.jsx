@@ -12,7 +12,6 @@ import Typography from '@mui/material/Typography';
 import CloseIcon from '@mui/icons-material/Close';
 import Slide from '@mui/material/Slide';
 import { Visibility } from '@mui/icons-material';
-<<<<<<< HEAD
 import Alert from '@mui/material/Alert';
 // import Stack from '@mui/material/Stack';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
