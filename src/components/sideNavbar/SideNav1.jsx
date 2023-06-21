@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink, Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import "./sideNav.scss";
 
 import { Grid, IconButton } from "@mui/material";
@@ -35,14 +35,13 @@ const SideNav = () => {
 		<Grid item sm={2} className='side-nav'>
 			<div className='page-links'>
 				{menuItems.map((item, index) => (
-					// <NavLink to={item.path} key={index}>
-					// 	<IconButton color='secondary' className='icon'>
-					// 		{" "}
-					// 		{item.icon}{" "}
-					// 	</IconButton>
-					// 	<label>{item.linkText}</label>
-					// </NavLink>
-					<Link to={item.path}>{item.linkText}</Link>
+					<NavLink to={item.path} key={index}>
+						<IconButton color='secondary' className='icon'>
+							{" "}
+							{item.icon}{" "}
+						</IconButton>
+						<label>{item.linkText}</label>
+					</NavLink>
 				))}
 			</div>
 		</Grid>
