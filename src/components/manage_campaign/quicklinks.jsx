@@ -1,140 +1,75 @@
 import * as React from 'react';
-import Typography from '@mui/material/Typography';
-import { Tooltip } from "@mui/material"
-import { Button } from '@mui/material';
-import AddCircleIcon from '@mui/icons-material/AddCircle';
-import TextField from '@mui/material/TextField';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
 import { DataGrid } from '@mui/x-data-grid';
-import { useSelector, useDispatch } from 'react-redux';
+import Box from "@mui/material/Box";
+import IconButton from "@mui/material/IconButton";
+import DeleteIcon from "@mui/icons-material/Delete";
+import { Button } from '@mui/material';
 
-import {
-    createQuickLinks, getQuickLinksOfBanner
-} from "../../redux/actions/campaignmanager.actions"
-
-export default function QuickLinks(props) {
-    const { status, quicklinks } = useSelector((state) => state.campaignBannerReducer);
-    const [open, setOpen] = React.useState(false);
-    const [title, setTitle] = React.useState("");
-    const [href, setHref] = React.useState("");
-    const details = props.data.data;
-    // console.log("d2= ",data);
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
-
-    const dispatch = useDispatch();
-
-    const reset = () => {
-        setTitle("");
-        setHref("");
-
-    }
-    const handleClose = () => {
-        reset();
-        setOpen(false);
-    };
-
-    const handleSubmit = () => {
-        let data = {
-            "title": title,
-            "href": href,
-            "campaign_id": details.campaign_id,
-            "client_id": details.client_id
-        };
-
-        console.log(" data = ", data);
-        console.log("  status = ", status);
-        dispatch(createQuickLinks(data));
-        if (status.statusText === "OK") {
-            alert("QUICKLINK CREATED SUCCESSFULLY");
-        }
-        dispatch(getQuickLinksOfBanner(details.campaign_id));
-        console.log("quicklinks = ", quicklinks);
-        setOpen(false);
+const columns = [
+    { field: 'id', headerName: 'ID', width: 70 },
+    { field: 'Name', headerName: 'Name', width: 200 },
+    { field: 'Links', headerName: 'Links', width: 200 },
+    {
+        field: "actions",
+        headerName: "Actions",
+        width: 300,
+        sortable: false,
+        renderCell: (params) => (
+            <Box>
+                <Button variant="contained" color="secondary">
+                    <DeleteIcon />
+                </Button>
 
 
 
-    }
+                {/* <Tooltip title='Edit brand'>
+                <IconButton
+                    onClick={() => {
+                        handleEdit(params.client_id);
+                    }}>
+                    <Edit />
+                </IconButton>
+            </Tooltip> */}
+                {/* <Tooltip title='Delete brand'>
+                <IconButton
+                    onClick={() => {
+                        handleDelete(params.client_id);
+                    }}>
+                    <Delete />
+                </IconButton>
+            </Tooltip> */}
+            </Box>
 
-    const column = [
-        { field: 'title', headerName: 'TITLE NAME', width: 200 },
-        { field: 'href', headerName: 'LINKS TO', width: 200 },
-        { field: 'modified_at', headerName: 'LAST MODIFIED AT', width: 250 }
-    ];
+        ),
+    },
+];
 
-    const row = quicklinks.map((item) => ({
-        ...item,
-        title: item.title,
-        href: item.href,
-        modified_at: item.modified_at
-    }));
+const rows = [
+    { id: 1, Name: 'Jon', Links: 'google.com' },
+    { id: 2, Name: 'Cersei', Links: 'plutos.one' },
+    { id: 3, Name: 'Jaime', Links: 'abcd.com' },
+    { id: 4, Name: 'Arya', Links: 'google.com' },
+    { id: 5, Name: 'Daenerys', Links: 'google.com' },
+    { id: 6, Name: null, Links: 'google.com' },
+    { id: 7, Name: 'Ferrara', Links: 'google.com' },
+    { id: 8, Name: 'Rossini', Links: 'google.com' },
+    { id: 9, Name: 'Harvey', Links: 'google.com' },
+];
 
+export default function DataTable() {
     return (
-        <div>
-            <Typography variant="h5" align="center">
-                QUICKLINKS
-                <Tooltip title="add new QUICKLINK">
-                    <Button autoFocus onClick={handleClickOpen} position="relative">
-                        <AddCircleIcon color="primary" />
-                    </Button>
-                </Tooltip>
-            </Typography>
-
-            <div style={{ height: 400, width: '100%' }}>
-                <DataGrid
-                    rows={row}
-                    columns={column}
-                    initialState={{
-                        pagination: {
-                            paginationModel: { page: 0, pageSize: 5 },
-                        },
-                    }}
-                    pageSizeOptions={[5, 10]}
-                    checkboxSelection
-                />
-            </div>
-
-
-
-            <Dialog open={open} onClose={handleClose}>
-                <DialogTitle>ADD NEW QUICK LINK</DialogTitle>
-                <DialogContent>
-                    <DialogContentText>
-                        Create a new quick link which will be displayed in your footer section directly from here
-                    </DialogContentText>
-                    <TextField
-                        autoFocus
-                        margin="dense"
-                        id="title"
-                        label="TITLE NAME"
-                        type="text"
-                        fullWidth
-                        variant="standard"
-                        onChange={(event) => setTitle(event.target.value)}
-                        required
-                    />
-                    <TextField
-                        autoFocus
-                        margin="dense"
-                        id="link"
-                        label="LINKING TO"
-                        type="text"
-                        fullWidth
-                        variant="standard"
-                        onChange={(event) => setHref(event.target.value)}
-                        required
-                    />
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={handleClose}>Cancel</Button>
-                    <Button onClick={handleSubmit}>CREATE</Button>
-                </DialogActions>
-            </Dialog>
+        <div style={{ height: 400, width: '100%' }}>
+            <DataGrid
+                rows={rows}
+                columns={columns}
+                initialState={{
+                    pagination: {
+                        paginationModel: { page: 0, pageSize: 5 },
+                    },
+                }}
+                pageSizeOptions={[5, 10]}
+                checkboxSelection
+            />
         </div>
-    )
+    );
 }
