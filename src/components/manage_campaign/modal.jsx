@@ -15,19 +15,6 @@ import { Visibility } from '@mui/icons-material';
 import Alert from '@mui/material/Alert';
 // import Stack from '@mui/material/Stack';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
-import DeleteIcon from "@mui/icons-material/Delete";
-import Box from "@mui/material/Box";
-import { DataGrid } from '@mui/x-data-grid';
-
-// import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-// import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import QuickLinks from './quicklinks';
-import Partners from './partners';
 
 
 import { Container, Grid , Tooltip } from '@mui/material';
