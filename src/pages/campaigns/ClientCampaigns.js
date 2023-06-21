@@ -93,13 +93,13 @@ const ClientCampaigns = () => {
 		{
 			field: "client_name",
 			headerName: "Client Name",
-			width: 360,
+			width: 200,
 			editable: false,
 		},
 		{
 			field: "campaign_name",
 			headerName: "Campaign Name",
-			width: 360,
+			width: 200,
 			editable: false,
 		},
 		// {
@@ -111,7 +111,7 @@ const ClientCampaigns = () => {
 		{
 			field: "actions",
 			headerName: "Actions",
-			width: 300,
+			width: 200,
 			sortable: false,
 			renderCell: (params) => (
 				<Box>

@@ -28,7 +28,7 @@ import { useState, useEffect } from 'react';
 
 import { useDispatch , useSelector } from 'react-redux';
 import {
-  updateCamBanner
+  updateCamBanner , deleteCampaignBanner , getAllBannersOfCampaign
 } from "../../redux/actions/campaignmanager.actions"
 
 
@@ -49,6 +49,8 @@ export default function RecipeReviewCard(props) {
   const [sequence_no, setSequenceNo] = useState("");
   const [href, setHref] = useState("");
 
+  const { campaignbanners, loading , status} = useSelector((state) => state.campaignBannerReducer);
+
   const handleExpandClick = () => {
     setExpanded(!expanded);
 
@@ -58,6 +60,20 @@ export default function RecipeReviewCard(props) {
 
 
   const [checked, setChecked] = React.useState(true);
+
+  const deletebanner = async (data) => {
+    console.log('deletebanner = data = ',data);
+    dispatch(deleteCampaignBanner(data));
+
+    // console.log( " d cam banners = ",status , " and data = ",props.data.campaign_id);
+    console.log("delete = ",status);
+    if(status === "DELETED SUCCESSFULLY"){
+      window.alert("DELETED SUCCESSFULLY");
+      dispatch(getAllBannersOfCampaign(props.data.campaign_id));
+      // console.log("d2::: ",data);
+      // window.location.reload();
+    }
+  }
 
   const handleChange = (event) => {
     setChecked(event.target.checked);
@@ -72,9 +88,10 @@ export default function RecipeReviewCard(props) {
       href: href,
       sequence_no: sequence_no
     };
-    console.log("cbid = ", cbid , " data = ",data ); 
+    console.log("cbid = ", cbid , " data = ",data , "props = ", props); 
     dispatch(updateCamBanner(cbid , data));
-    window.location.reload();
+    alert("CAMPAIGN DETAILS UPDATED SUCCESSFULLY");
+    dispatch(getAllBannersOfCampaign(props.data.campaign_id));
 
   };
 
@@ -114,7 +131,7 @@ export default function RecipeReviewCard(props) {
           {/* <ModeEditIcon /> */}
         </IconButton>
         <IconButton aria-label="delete">
-          <DeleteIcon />
+          <DeleteIcon onClick={()=>{deletebanner(data.id)}} />
         </IconButton>
         <Banner
           expand={expanded}

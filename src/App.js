@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link, Routes } from "react-router-dom";
 
 import Login from "./components/login/Login";
 import Layout from "./layout/Layout";
@@ -51,9 +51,13 @@ const App = () => {
 	return (
 		<ThemeProvider theme={theme}>
 			<Provider store={store}>
+				
+
 				<Router>
 					<Routes>
+						
 						<Route path='/login' element={<Login />} />
+
 						<Route path='/' element={<Layout />}>
 							<Route
 								index
@@ -64,7 +68,7 @@ const App = () => {
 								}
 							/>
 							<Route
-								path='users'
+								path='/users'
 								element={
 									<PrivateRoute>
 										<Users />
@@ -107,6 +111,7 @@ const App = () => {
 						<Route path='/*' element={<NotFound />} />
 					</Routes>
 				</Router>
+
 			</Provider>
 		</ThemeProvider>
 	);
