@@ -15,9 +15,22 @@ import { Visibility } from '@mui/icons-material';
 import Alert from '@mui/material/Alert';
 // import Stack from '@mui/material/Stack';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
+import DeleteIcon from "@mui/icons-material/Delete";
+import Box from "@mui/material/Box";
+import { DataGrid } from '@mui/x-data-grid';
+
+// import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+// import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import QuickLinks from './quicklinks';
+import Partners from './partners';
 
 
-import { Container, Grid , Tooltip } from '@mui/material';
+import { Container, Grid, Tooltip } from '@mui/material';
 import Banner from './banner';
 
 
@@ -31,7 +44,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 // work from reducer - work pending - for testing purpose
 import {
-  getAllBannersOfCampaign
+  getAllBannersOfCampaign, getQuickLinksOfBanner
 } from "../../redux/actions/campaignmanager.actions"
 import DataTable from './quicklinks';
 
@@ -42,15 +55,18 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 export default function FullScreenDialog(props) {
 
-  const { campaignbanners, loading } = useSelector((state) => state.campaignBannerReducer);
+  const { campaignbanners, loading, quicklinks } = useSelector((state) => state.campaignBannerReducer);
   const [campdata, setCampData] = React.useState(props.data);
   const [open, setOpen] = React.useState(false);
+  const [openql, setOpenql] = React.useState(false);
+
   const dispatch = useDispatch();
 
   const handleClickOpen = (props) => {
     setOpen(true);
     // console.log(" bid = ",campdata.campaign_id );
     dispatch(getAllBannersOfCampaign(campdata.campaign_id));
+    dispatch(getQuickLinksOfBanner(campdata.campaign_id));
     // console.log(" dvl = ", campdata);
     // console.log(" camp banners : ",campaignbanners);
   };
@@ -91,9 +107,9 @@ export default function FullScreenDialog(props) {
                 Name of campaign - {campdata.campaign_name}
               </Typography>
             </Container>
-            <Button autoFocus color="inherit" onClick={handleClose}>
+            {/* <Button autoFocus color="inherit" onClick={handleClose}>
               save
-            </Button>
+            </Button> */}
           </Toolbar>
         </AppBar>
         <List>
@@ -131,35 +147,11 @@ export default function FullScreenDialog(props) {
           {/* <h1>QUICK LINKS </h1> */}
           <Grid container>
             <Grid lg={6} md={6} xs={12}>
-              <Typography variant="h5" align="center">
-                
-                  QUICKLINKS CENTER
-                  <Tooltip>
-                      <Button autoFocus onClick={handleClose} position="relative">
-                          <AddCircleIcon color="primary"/>
-                      </Button>
-
-                  </Tooltip>
-
-                
-              </Typography>
-              <DataTable />
+              <QuickLinks data={props}/>
             </Grid>
 
             <Grid lg={6} md={6} xs={12}>
-            <Typography variant="h5" align="center">
-                
-                PARTNERS
-                <Tooltip>
-                    <Button autoFocus onClick={handleClose} position="relative">
-                        <AddCircleIcon color="primary"/>
-                    </Button>
-
-                </Tooltip>
-
-              
-            </Typography>
-              <DataTable />
+              <Partners data={props}/>
             </Grid>
 
           </Grid>

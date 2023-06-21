@@ -18,7 +18,7 @@ import Select from '@mui/material/Select';
 
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getListOfBanners,  saveCampaignBanner } from '../../redux/actions/campaignmanager.actions';
+import { getAllBannersOfCampaign, getListOfBanners, saveCampaignBanner } from '../../redux/actions/campaignmanager.actions';
 
 const style = {
     position: 'absolute',
@@ -38,12 +38,12 @@ export default function KeepMountedModal(props) {
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
-    const [age, setAge] = React.useState('');
+    // const [age, setAge] = React.useState('');
 
-    const { banners, campaignbanner } = useSelector((state) => state.campaignBannerReducer);
+    const { banners, campaignbanner, status } = useSelector((state) => state.campaignBannerReducer);
     // console.log(" banners list = ", banners, " campaignbanner = ", campaignbanner);
     const handleChange = (event) => {
-        console.log("target = ",event.target.value);
+        console.log("target = ", event.target.value);
         setBannerId(event.target.value.id);
         setBanner(event.target.value);
     };
@@ -51,19 +51,24 @@ export default function KeepMountedModal(props) {
     const dispatch = useDispatch();
 
 
-    const [bannerid , setBannerId] = useState(null);
+    const [bannerid, setBannerId] = useState(null);
     const [alt, setAlt] = useState("");
     const [href, setHref] = useState(null);
-    const [sequence_no , setSequenceNo] = useState(1);
-    const [banner , setBanner] = useState("");
+    const [sequence_no, setSequenceNo] = useState(1);
+    const [banner, setBanner] = useState("");
 
 
-    const addBanner = async () => {
-        
-    }
+    const resetValues = () => {
+        setAlt('');
+        setHref(null);
+        setSequenceNo(1);
+        setBanner("");
+    };
 
     const saveCamBanner = async () => {
         console.log("saving campaign banner");
+
+
         const data = {
             campaign_id: (props.data),
             banner_id: bannerid,
@@ -71,19 +76,22 @@ export default function KeepMountedModal(props) {
             href: href,
             sequence_no: sequence_no
         };
-        console.log(" data received from props = ",props);
+        console.log(" data received from props = ", props);
         console.log("  banner added = ", data);
         dispatch(saveCampaignBanner(data));
-        // if(campaignbanner){
-        //     alert("BANNER ADDED SUCCESSFULLY");
-        // }
-        // if(errors){
-        //     alert("SOME ERROR OCCURED");
-        // }
-        window.location.reload();
+        if (status.success === true) {
+            alert("CREATED SUCCESSFULLY");
+        }
+        else {
+            alert(status.message);
+        }
+        handleClose();
+        resetValues();
+        dispatch(getAllBannersOfCampaign(props.data));
+
     };
 
-    
+
 
     useEffect(() => {
         dispatch(getListOfBanners());
@@ -107,7 +115,7 @@ export default function KeepMountedModal(props) {
                             Assign Campaign
                         </Link>
                         <Link
-                        color="inherit"
+                            color="inherit"
                         >
                             New Banner
                         </Link>
@@ -129,7 +137,7 @@ export default function KeepMountedModal(props) {
                                     id="demo-simple-select-helper"
                                     value={banner}
                                     label="Banner selection"
-                                    onChange={(event)=> {handleChange(event)}}
+                                    onChange={(event) => { handleChange(event) }}
                                 >
                                     <MenuItem value="">
                                         <em>None</em>
@@ -156,13 +164,13 @@ export default function KeepMountedModal(props) {
                         <AccordionDetails>
                             <Typography>
                                 FILL THE RECORDS
-                                <TextField id="standard-basic" label="ALT TAG" variant="standard" value={alt} onChange={(event)=> setAlt(event.target.value)}/>
-                                <TextField id="standard-basic" label="LINK TO" variant="standard" value={href} onChange={(event)=> setHref(event.target.value)} />
+                                <TextField id="standard-basic" label="ALT TAG" variant="standard" value={alt} onChange={(event) => setAlt(event.target.value)} required />
+                                <TextField id="standard-basic" label="LINK TO" variant="standard" value={href} onChange={(event) => setHref(event.target.value)} required />
                                 <TextField id="standard-basic" label="SEQUENCE NUMBER i.e. 1" variant="standard" />
                             </Typography>
                         </AccordionDetails>
                         <AccordionDetails align="center">
-                            <Button variant="contained" onClick={()=>{saveCamBanner()}}>Add the Banner </Button>
+                            <Button variant="contained" onClick={() => { saveCamBanner() }}>Add the Banner </Button>
                         </AccordionDetails>
                     </Accordion>
 

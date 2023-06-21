@@ -11,13 +11,14 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { DataGrid } from '@mui/x-data-grid';
 import { useSelector, useDispatch } from 'react-redux';
+import { useEffect } from 'react';
 
 import {
-    createQuickLinks, getQuickLinksOfBanner
+    getBrandPartnersOfCampaign, createBrandPartners
 } from "../../redux/actions/campaignmanager.actions"
 
-export default function QuickLinks(props) {
-    const { status, quicklinks } = useSelector((state) => state.campaignBannerReducer);
+export default function Partners(props) {
+    const { status, brandpartners , error , loading } = useSelector((state) => state.campaignBannerReducer);
     const [open, setOpen] = React.useState(false);
     const [title, setTitle] = React.useState("");
     const [href, setHref] = React.useState("");
@@ -39,26 +40,38 @@ export default function QuickLinks(props) {
         setOpen(false);
     };
 
-    const handleSubmit = () => {
-        let data = {
-            "title": title,
-            "href": href,
-            "campaign_id": details.campaign_id,
-            "client_id": details.client_id
-        };
+    useEffect(() => {
+        console.log("cid = ", details.campaign_id);
+        dispatch(getBrandPartnersOfCampaign(details.campaign_id));
+    },[]);
+    const handleSubmit = async () => {
+        console.log("submit");
 
-        console.log(" data = ", data);
-        console.log("  status = ", status);
-        dispatch(createQuickLinks(data));
-        if (status.statusText === "OK") {
-            alert("QUICKLINK CREATED SUCCESSFULLY");
+        
+        if (title !== "" && href !== "") {
+            let data = {
+                title: title,
+                href: href,
+                campaign_id: details.campaign_id,
+                client_id: details.client_id
+            };
+            console.log(" data = ", data);
+            dispatch(createBrandPartners(data));
+            console.log("  status = ", status);
+            if (status) {
+                alert("CREATED SUCCESSFULLY");
+            }
+            await dispatch(getBrandPartnersOfCampaign(details.campaign_id));
+            console.log("brandpartners = ", brandpartners);
+            setOpen(false);
         }
-        dispatch(getQuickLinksOfBanner(details.campaign_id));
-        console.log("quicklinks = ", quicklinks);
-        setOpen(false);
-
-
-
+        else {
+            alert(" SOME ERROR OCCURRED");
+            dispatch(getBrandPartnersOfCampaign(details.campaign_id));
+            // console.log("brandpartners = ", brandpartners);
+            setOpen(false);
+        }
+       
     }
 
     const column = [
@@ -67,7 +80,7 @@ export default function QuickLinks(props) {
         { field: 'modified_at', headerName: 'LAST MODIFIED AT', width: 250 }
     ];
 
-    const row = quicklinks.map((item) => ({
+    const row = brandpartners.map((item) => ({
         ...item,
         title: item.title,
         href: item.href,
@@ -77,7 +90,7 @@ export default function QuickLinks(props) {
     return (
         <div>
             <Typography variant="h5" align="center">
-                QUICKLINKS
+                BRAND PARTNERS
                 <Tooltip title="add new QUICKLINK">
                     <Button autoFocus onClick={handleClickOpen} position="relative">
                         <AddCircleIcon color="primary" />
@@ -102,10 +115,10 @@ export default function QuickLinks(props) {
 
 
             <Dialog open={open} onClose={handleClose}>
-                <DialogTitle>ADD NEW QUICK LINK</DialogTitle>
+                <DialogTitle>ADD NEW BRAND PARTNER</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        Create a new quick link which will be displayed in your footer section directly from here
+                        Assign a new brand partner to showcase them on your website footer
                     </DialogContentText>
                     <TextField
                         autoFocus
