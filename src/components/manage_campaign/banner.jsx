@@ -26,9 +26,9 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import { useState, useEffect } from 'react';
 // import { useDispatch } from 'react-redux';
 
-import { useDispatch , useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
-  updateCamBanner , deleteCampaignBanner , getAllBannersOfCampaign
+  updateCamBanner, deleteCampaignBanner, getAllBannersOfCampaign
 } from "../../redux/actions/campaignmanager.actions"
 
 
@@ -49,7 +49,8 @@ export default function RecipeReviewCard(props) {
   const [sequence_no, setSequenceNo] = useState("");
   const [href, setHref] = useState("");
 
-  const { campaignbanners, loading , status} = useSelector((state) => state.campaignBannerReducer);
+
+  const { campaignbanners, loading, status } = useSelector((state) => state.campaignBannerReducer);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -62,12 +63,12 @@ export default function RecipeReviewCard(props) {
   const [checked, setChecked] = React.useState(true);
 
   const deletebanner = async (data) => {
-    console.log('deletebanner = data = ',data);
+    console.log('deletebanner = data = ', data);
     dispatch(deleteCampaignBanner(data));
 
     // console.log( " d cam banners = ",status , " and data = ",props.data.campaign_id);
-    console.log("delete = ",status);
-    if(status === "DELETED SUCCESSFULLY"){
+    console.log("delete = ", status);
+    if (status === "DELETED SUCCESSFULLY") {
       window.alert("DELETED SUCCESSFULLY");
       dispatch(getAllBannersOfCampaign(props.data.campaign_id));
       // console.log("d2::: ",data);
@@ -88,14 +89,14 @@ export default function RecipeReviewCard(props) {
       href: href,
       sequence_no: sequence_no
     };
-    console.log("cbid = ", cbid , " data = ",data , "props = ", props); 
-    dispatch(updateCamBanner(cbid , data));
+    console.log("cbid = ", cbid, " data = ", data);
+    dispatch(updateCamBanner(cbid, data));
     alert("CAMPAIGN DETAILS UPDATED SUCCESSFULLY");
     dispatch(getAllBannersOfCampaign(props.data.campaign_id));
 
   };
 
- 
+
   // console.log(" banner inside compoennt = " ,data);
   return (
     <Card sx={{ maxWidth: 500 }}>
@@ -131,7 +132,7 @@ export default function RecipeReviewCard(props) {
           {/* <ModeEditIcon /> */}
         </IconButton>
         <IconButton aria-label="delete">
-          <DeleteIcon onClick={()=>{deletebanner(data.id)}} />
+          <DeleteIcon onClick={() => { deletebanner(data.id) }} />
         </IconButton>
         <Banner
           expand={expanded}
@@ -191,7 +192,7 @@ export default function RecipeReviewCard(props) {
           <br />
           <br />
 
-          <Button variant="contained" onClick={() => {updatebanner()}}>Save</Button>
+          <Button variant="contained" onClick={() => { updatebanner() }}>Save</Button>
         </CardContent>
       </Collapse>
     </Card>

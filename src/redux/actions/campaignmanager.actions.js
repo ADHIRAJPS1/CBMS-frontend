@@ -57,7 +57,8 @@ export const saveCampaignBanner = (data) => async(dispatch) => {
     try{
         console.log(" save campaign banner= ");
         const res = await apicall(`campaign_banner`, "post", data);
-        console.log(" save campaign banner 2 = ", res);       
+        console.log(" save campaign banner 2 = ", res);
+        
         dispatch({
             type: CREATE_CAMPAIGN_BANNER,
             payload: res.data
@@ -89,6 +90,7 @@ export const updateCamBanner = (id,data) => async (dispatch) => {
         })
     }
 };
+
 
 export const deleteCampaignBanner = (campbannerid) => async(dispatch)=>{
     try{
@@ -173,12 +175,12 @@ export const createBrandPartners = (data) => async (dispatch) => {
         });
     } catch (err) {
         console.log("error while creating a brandpartner ",err) ;
-        
+
         dispatch({
             type: ERR_BRANDPARTNER,
             payload: { msg: err.message.statusText , status: err}
         })
     }
-}
+};
 
 

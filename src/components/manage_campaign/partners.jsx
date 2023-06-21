@@ -47,7 +47,7 @@ export default function Partners(props) {
     const handleSubmit = async () => {
         console.log("submit");
 
-        
+
         if (title !== "" && href !== "") {
             let data = {
                 title: title,
@@ -71,7 +71,7 @@ export default function Partners(props) {
             // console.log("brandpartners = ", brandpartners);
             setOpen(false);
         }
-       
+
     }
 
     const column = [

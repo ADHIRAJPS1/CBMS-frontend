@@ -38,12 +38,12 @@ export default function KeepMountedModal(props) {
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
-    // const [age, setAge] = React.useState('');
+    const [age, setAge] = React.useState('');
 
-    const { banners, campaignbanner, status } = useSelector((state) => state.campaignBannerReducer);
+    const { banners, campaignbanner , status } = useSelector((state) => state.campaignBannerReducer);
     // console.log(" banners list = ", banners, " campaignbanner = ", campaignbanner);
     const handleChange = (event) => {
-        console.log("target = ", event.target.value);
+        console.log("target = ",event.target.value);
         setBannerId(event.target.value.id);
         setBanner(event.target.value);
     };
@@ -51,7 +51,7 @@ export default function KeepMountedModal(props) {
     const dispatch = useDispatch();
 
 
-    const [bannerid, setBannerId] = useState(null);
+    const [bannerid , setBannerId] = useState(null);
     const [alt, setAlt] = useState("");
     const [href, setHref] = useState(null);
     const [sequence_no, setSequenceNo] = useState(1);
@@ -67,8 +67,6 @@ export default function KeepMountedModal(props) {
 
     const saveCamBanner = async () => {
         console.log("saving campaign banner");
-
-
         const data = {
             campaign_id: (props.data),
             banner_id: bannerid,
@@ -76,9 +74,10 @@ export default function KeepMountedModal(props) {
             href: href,
             sequence_no: sequence_no
         };
-        console.log(" data received from props = ", props);
+        console.log(" data received from props = ",props);
         console.log("  banner added = ", data);
         dispatch(saveCampaignBanner(data));
+        
         if (status.success === true) {
             alert("CREATED SUCCESSFULLY");
         }
@@ -91,7 +90,7 @@ export default function KeepMountedModal(props) {
 
     };
 
-
+    
 
     useEffect(() => {
         dispatch(getListOfBanners());
@@ -170,7 +169,7 @@ export default function KeepMountedModal(props) {
                             </Typography>
                         </AccordionDetails>
                         <AccordionDetails align="center">
-                            <Button variant="contained" onClick={() => { saveCamBanner() }}>Add the Banner </Button>
+                        <Button variant="contained" onClick={() => { saveCamBanner() }}>Add the Banner </Button>
                         </AccordionDetails>
                     </Accordion>
 
