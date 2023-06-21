@@ -12,6 +12,7 @@ import Typography from '@mui/material/Typography';
 import CloseIcon from '@mui/icons-material/Close';
 import Slide from '@mui/material/Slide';
 import { Visibility } from '@mui/icons-material';
+<<<<<<< HEAD
 import Alert from '@mui/material/Alert';
 // import Stack from '@mui/material/Stack';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
@@ -31,6 +32,10 @@ import Partners from './partners';
 
 
 import { Container, Grid, Tooltip } from '@mui/material';
+=======
+
+import { Container, Grid } from '@mui/material';
+>>>>>>> parent of 0f8e2b4 (banners)
 import Banner from './banner';
 
 
@@ -124,10 +129,8 @@ export default function FullScreenDialog(props) {
           </ListItem>
           <Divider />
           <Grid container justifyContent="left">
-            {campaignbanners.length <= 0 && (
-              <Grid container justifyContent="center">
-                <Alert severity="info" variant="filled">NO CAMPAIGN BANNERS FOUND</Alert>
-              </Grid>
+            { campaignbanners.length <=0 && ( 
+              <h1>NO CAMPAIGN FOUND</h1>
             )}
             {campaignbanners.length > 0 && (
               campaignbanners.map((item) => {
@@ -143,24 +146,40 @@ export default function FullScreenDialog(props) {
 
           <Divider />
 
-
+          
           {/* <h1>QUICK LINKS </h1> */}
           <Grid container>
             <Grid lg={6} md={6} xs={12}>
+<<<<<<< HEAD
               <QuickLinks data={props}/>
             </Grid>
 
             <Grid lg={6} md={6} xs={12}>
               <Partners data={props}/>
+=======
+              <Typography>
+                  <h1 align="center">QUICKLINKS CENTER</h1>
+
+              </Typography>
+                <DataTable />
+            </Grid>
+
+            <Grid lg={6} md={6} xs={12}>
+              <Typography>
+                <h1 align="center">BRAND PARTNERS</h1>
+
+              </Typography>
+                <DataTable />
+>>>>>>> parent of 0f8e2b4 (banners)
             </Grid>
 
           </Grid>
 
           {/* <h1>BRAND PARTNERS AUTOMATION</h1> */}
-
+              
         </List>
       </Dialog>
-
+      
     </div>
 
   );
