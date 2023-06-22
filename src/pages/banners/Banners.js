@@ -1,14 +1,56 @@
+import * as React from "react";
 import Box from "@mui/material/Box";
 import { Delete, Edit, PhotoCamera } from "@mui/icons-material";
-import { Button, Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, FormControlLabel, Grid, IconButton, InputLabel, Switch, Tooltip } from "@mui/material";
+import { Button, Container, Dialog, DialogActions, DialogContent, DialogContentText, Typography, DialogTitle, FormControl, FormControlLabel, Grid, IconButton, InputLabel, Switch, Tooltip } from "@mui/material";
 import Table from "../../components/table/Table";
 import "../banners/banners.scss";
 import BannerCard from "../../components/cards/BannerCard";
 import { useState } from "react";
+import Slide from '@mui/material/Slide';
+import TextField from '@mui/material/TextField';
+// import CloudUploadIcon from '@material-ui/icons/CloudUpload';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import ImageList from '@mui/material/ImageList';
+import ImageListItem from '@mui/material/ImageListItem';
+import MenuItem from '@mui/material/MenuItem';
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+	return <Slide direction="up" ref={ref} {...props} />;
+});
+
+
+const status = [
+	{
+		value: 1,
+		label: "Active"
+	},
+	{
+		value: 0,
+		label: "InActive"
+	}
+];
+
 
 const Banners = () => {
+
+	const input = {
+		display: "none"
+	};
 	const [openDialog, setOpenDialog] = useState(false);
 	const [editBanner, setEditBanner] = useState({});
+	const [imagedesktop, setImagedesktop] = useState(null);
+	const [imagemobile, setImagemobile] = useState(null);
+	const [open, setOpen] = React.useState(false);
+
+
+
+	const handleClickOpen = () => {
+		setOpen(true);
+	};
+
+	const handleClickClose = () => {
+		setOpen(false);
+	};
 
 	const handleEdit = (banner_data) => {
 		setOpenDialog(true);
@@ -22,6 +64,19 @@ const Banners = () => {
 	const handleSave = () => {
 		console.log("Saving banner details")
 	}
+
+	const handleImageChangeDesktop = (event) => {
+		setImagedesktop(event.target.files[0]);
+	};
+
+	const handleImageChangeMobile = (event) => {
+		setImagemobile(event.target.files[0]);
+	};
+
+	const handleSubmit = (event) => {
+		event.preventDefault();
+		// Do something with the uploaded image
+	};
 
 	const rows = [
 		{
@@ -95,11 +150,123 @@ const Banners = () => {
 
 	return (<>
 		<Container >
+			<Button variant="contained" onClick={handleClickOpen}>CREATE NEW BANNER</Button>
 			<Grid container direction='column' spacing={5}>
 				<Grid item>
 					<Table rows={rows} columns={columns} />
 				</Grid>
 			</Grid>
+
+			<Dialog
+				open={open}
+				TransitionComponent={Transition}
+				keepMounted
+				onClose={handleClose}
+				aria-describedby="alert-dialog-slide-description"
+			>
+				<DialogTitle>{"One Solution for all your banners necessity - Create Your Banner here "}</DialogTitle>
+				<DialogContent>
+					<TextField id="outlined-basic" label="Enter Unique Name" variant="outlined" fullWidth />
+					<br /> <br />
+					<form onSubmit={handleSubmit}>
+						<input
+							accept="image/*"
+							style={input}
+
+							id="image-upload-desktop"
+							type="file"
+							onChange={handleImageChangeDesktop}
+						/>
+						<label htmlFor="image-upload-desktop">
+							<Button
+								variant="contained"
+								color="primary"
+								component="span"
+								startIcon={<ExpandMoreIcon />}
+							>
+								Upload Desktop Image
+							</Button>
+						</label>
+
+						<br /><br />
+
+						<input
+							accept="image/*"
+							style={input}
+
+							id="image-upload-mobile"
+							type="file"
+							onChange={handleImageChangeMobile}
+						/>
+						<label htmlFor="image-upload-mobile">
+							<Button
+								variant="contained"
+								color="primary"
+								component="span"
+								startIcon={<ExpandMoreIcon />}
+							>
+								Upload Mobile Image
+							</Button>
+						</label>
+						<br></br>
+						{/* <ImageList
+							sx={{ width: 500, height: 450 }}
+							variant="quilted"
+							cols={4}
+							rowHeight={121}
+						>
+
+							<ImageListItem>
+								<img
+									src={imagedesktop}
+									alt={'desktop view'}
+									loading="lazy"
+								/>
+							</ImageListItem>
+
+						</ImageList> */}
+						<ImageList
+							sx={{ width: 500, height: 250 ,  padding: 2 }}
+							variant="quilted"
+							cols={2}
+							rowHeight={250}
+						>
+							{imagedesktop && (
+								<Tooltip title="Desktop image of the banner">
+									<ImageListItem>
+										<img
+											src={URL.createObjectURL(imagedesktop)}
+											alt={'desktop view'}
+											loading="lazy"
+										/>
+									</ImageListItem>
+								</Tooltip>
+								// <img src={URL.createObjectURL(imagedesktop)} alt="Uploaded Image" />
+							)}
+							{imagemobile && (
+								<Tooltip title="Mobile image of the banner">
+									<ImageListItem>
+										<img
+											src={URL.createObjectURL(imagemobile)}
+											alt={'mobile view'}
+											tooltip="mobile"
+											loading="lazy"
+										/>
+									</ImageListItem>
+								</Tooltip>
+								// <img src={URL.createObjectURL(imagemobile)} alt="Uploaded Image" />
+							)}
+						</ImageList>
+
+
+
+					</form>
+				</DialogContent>
+				<DialogActions>
+					<Button onClick={handleClickClose}>Cancel</Button>
+					<Button onClick={handleClickClose}>Save</Button>
+				</DialogActions>
+			</Dialog>
 			<Dialog
 				fullWidth={true}
 				maxWidth={'xl'}
@@ -108,16 +275,16 @@ const Banners = () => {
 			>
 				<DialogTitle>{editBanner.title}</DialogTitle>
 				<Box
-						noValidate
-						component="form"
-						sx={{
-							justifyContent: 'center',
-							position: 'absolute',
-							top: '0',
-							right: '20px'
-						}}
-					>
-						<FormControlLabel
+					noValidate
+					component="form"
+					sx={{
+						justifyContent: 'center',
+						position: 'absolute',
+						top: '0',
+						right: '20px'
+					}}
+				>
+					<FormControlLabel
 						control={
 							<Grid
 								container
@@ -129,8 +296,8 @@ const Banners = () => {
 									variant='outlined'
 									startIcon={<PhotoCamera />}
 									component='label'
-									// onChange={handleIconChange}
-									>
+								// onChange={handleIconChange}
+								>
 									Upload Desktop Banner
 									<input
 										hidden
@@ -162,8 +329,8 @@ const Banners = () => {
 									variant='outlined'
 									startIcon={<PhotoCamera />}
 									component='label'
-									// onChange={handleIconChange}
-									>
+								// onChange={handleIconChange}
+								>
 									Upload Mobile Banner
 									<input
 										hidden
@@ -183,7 +350,7 @@ const Banners = () => {
 							</Grid>
 						}
 					/>
-					</Box>
+				</Box>
 				<DialogContent sx={{ padding: 'auto 0px', margin: '0' }}>
 					<DialogContentText>Desktop Banner</DialogContentText>
 					<Box
@@ -195,7 +362,7 @@ const Banners = () => {
 							backgroundColor: '#AEAEAE'
 						}}
 					>
-						<img src={editBanner.img_d} style={{ width: '100%', height: '100%', minHeight:'163px', margin: '0px' }} />
+						<img src={editBanner.img_d} style={{ width: '100%', height: '100%', minHeight: '163px', margin: '0px' }} />
 					</Box>
 					<DialogContentText>Mobile Banner</DialogContentText>
 					<Box
@@ -207,7 +374,7 @@ const Banners = () => {
 							backgroundColor: '#AEAEAE'
 						}}
 					>
-						<img src={editBanner.img_m} style={{ width: '600px', height: '100%', minHeight:'160px', margin: '0px' }} />
+						<img src={editBanner.img_m} style={{ width: '600px', height: '100%', minHeight: '160px', margin: '0px' }} />
 					</Box>
 				</DialogContent>
 				<DialogActions>
@@ -215,7 +382,7 @@ const Banners = () => {
 					<Button onClick={handleSave}>Save</Button>
 				</DialogActions>
 			</Dialog>
-		</Container>
+		</Container >
 	</>);
 }
 
